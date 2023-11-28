@@ -6,6 +6,9 @@ import plotly.express as px
 file_path = "IIP_Data.xlsx"
 df = pd.read_excel(file_path)
 
+# Convert "Date" column to datetime format
+df["Date"] = pd.to_datetime(df["Date"])
+
 # Streamlit app
 st.title("IIP Data Visualization App")
 
