@@ -15,7 +15,10 @@ st.title("IIP Data Visualization App")
 # Sidebar
 st.sidebar.header("Select Options")
 selected_column = st.sidebar.selectbox("Select Column", df.columns[1:])
-start_date = st.sidebar.date_input("Select Start Date", df["Date"].min())
+
+# Convert the minimum date to a string in the required format
+start_date_str = df["Date"].min().strftime("%Y:%m")
+start_date = st.sidebar.date_input("Select Start Date", pd.to_datetime(start_date_str))
 
 # Filter data based on user selection
 filtered_df = df[df["Date"] >= start_date]
