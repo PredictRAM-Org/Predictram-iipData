@@ -22,6 +22,9 @@ default_start_date = pd.to_datetime("2012-04-01")
 # Date input widget with default value
 start_date = st.sidebar.date_input("Select Start Date", default_start_date)
 
+# Ensure that the start_date is a Timestamp object
+start_date = pd.to_datetime(start_date)
+
 # Filter data based on user selection
 filtered_df = df[df["Date"] >= start_date]
 
