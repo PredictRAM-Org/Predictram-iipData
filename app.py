@@ -7,7 +7,7 @@ file_path = "IIP_Data.xlsx"
 df = pd.read_excel(file_path)
 
 # Convert "Date" column to datetime format
-df["Date"] = pd.to_datetime(df["Date"], format="%Y:%m", errors='coerce')
+df["Date"] = pd.to_datetime(df["Date"], format="%Y-%m-%d", errors='coerce')
 
 # Streamlit app
 st.title("IIP Data Visualization App")
@@ -16,13 +16,11 @@ st.title("IIP Data Visualization App")
 st.sidebar.header("Select Options")
 selected_column = st.sidebar.selectbox("Select Column", df.columns[1:])
 
-# Check if there are any valid dates before calculating the minimum date
-if not df["Date"].isnull().all():
-    # Convert the minimum date to a string in the required format
-    start_date_str = df["Date"].min().strftime("%Y:%m")
-    start_date = st.sidebar.date_input("Select Start Date", pd.to_datetime(start_date_str))
-else:
-    st.sidebar.warning("No valid dates found in the 'Date' column.")
+# Default start date
+default_start_date = pd.to_datetime("2012-04-01")
+
+# Date input widget with default value
+start_date = st.sidebar.date_input("Select Start Date", default_start_date)
 
 # Filter data based on user selection
 filtered_df = df[df["Date"] >= start_date]
