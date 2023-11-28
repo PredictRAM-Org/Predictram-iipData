@@ -31,3 +31,8 @@ filtered_df = df[df["Date"] >= start_date]
 # Plot the selected column
 fig = px.line(filtered_df, x="Date", y=selected_column, title=f"{selected_column} over Time")
 st.plotly_chart(fig)
+
+# Display data table for selected date and columns
+st.header("Selected Data Table")
+selected_data = filtered_df.loc[filtered_df["Date"] == start_date, [selected_column]]
+st.dataframe(selected_data)
