@@ -7,7 +7,7 @@ file_path = "IIP_Data.xlsx"
 df = pd.read_excel(file_path)
 
 # Convert "Date" column to datetime format
-df["Date"] = pd.to_datetime(df["Date"])
+df["Date"] = pd.to_datetime(df["Date"], format="%Y:%m", errors='coerce')
 
 # Streamlit app
 st.title("IIP Data Visualization App")
