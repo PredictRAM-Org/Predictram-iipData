@@ -19,6 +19,16 @@ def load_stock_data():
 
 # Function to plot separate and combined graphs
 def plot_graphs(stock_data, selected_stock):
+    # Check if 'Industry' is present in the stock data
+    if 'Industry' not in stock_data:
+        st.error("Error: 'Industry' stock data not found.")
+        return
+
+    # Check if the selected stock is present in the stock data
+    if selected_stock not in stock_data:
+        st.error(f"Error: Stock data for {selected_stock} not found.")
+        return
+
     # Plot separate graph for industry
     fig_industry = px.line(stock_data['Industry'], x="Date", y="Close", title="Industry Close Price")
     st.plotly_chart(fig_industry)
@@ -40,7 +50,11 @@ st.title("Stock Data Visualization App")
 
 # Sidebar
 st.sidebar.header("Select Options")
-selected_stock = st.sidebar.selectbox("Select Stock", list(stock_data.keys()), index=1)
 
-# Plot graphs
-plot_graphs(stock_data, selected_stock)
+# Check if 'Industry' is present before displaying the option
+if 'Industry' in stock_data:
+    selected_stock = st.sidebar.selectbox("Select Stock", ['Industry'] + list(stock_data.keys()), index=1)
+    # Plot graphs
+    plot_graphs(stock_data, selected_stock)
+else:
+    st.sidebar.warning("Warning: 'Industry' stock data not found.")
